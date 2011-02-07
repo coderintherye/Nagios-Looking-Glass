@@ -1,0 +1,255 @@
+.Server_Name
+{
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: #000088;
+}
+
+  .Server_Name_Name
+  {
+    float: right;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bold;
+    color: #000088;
+    text-align: right;
+  }
+  
+  .Server_Name_Status
+  {
+    float: left;
+    position: relative;
+    left: 20px;
+    top: 2px;
+  }
+  
+  .Server_Status_Text_U
+  {
+    font-weight: bold;
+    color: #008800;
+  }
+  
+  .Server_Status_Text_D
+  {
+    font-weight: bold;
+    color: #ff0000;
+  }
+  
+  .Server_Status_Text_NE
+  {
+    font-weight: bold;
+    color: #ff0000;
+  }
+  
+  .Server_Status_Text_DM
+  {
+    font-weight: bold;
+    color: #888800;
+  }
+  
+  .Server_Status_Text_UN
+  {
+    font-weight: bold;
+    color: #c0c0c0;
+  }
+  
+.Server_MetricSummary
+{
+  border: dashed 1px #c0c0c0;
+  background-color: #e5e5e5;
+  position: relative;
+  left: 10%;
+  width: 80%;
+  padding: 4px;
+}
+
+.Server_MetricStatus
+{
+  clear: both;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+  .Server_MetricStatus .Server_MetricStatus_Img
+  {
+    float: left;
+    width: 30px;
+  }
+  
+  .Server_MetricStatus .Server_MetricStatus_Desc
+  {
+    float: left;
+    position: relative;
+    top: 2px;
+  }
+  
+  .Server_MetricStatus .Server_MetricStatus_Count
+  {
+    float: right;
+    width: 50px;
+    position: relative;
+    top: 2px;
+  }
+
+.Server_MetricList
+{
+  position: relative;
+  left: 10%;
+  width: 80%;
+}
+
+.Server_Metric_Surround_L
+{
+  float: left;
+  height: 25px;
+  border: 0px;
+  padding: 0px;
+  /*
+    I've heard on the grapevine this simple trick forces IE to download
+    the images associated with this item, rather than it's "on/off" download
+    mechanism, resulting in a screwed-up page!
+  */
+  position: relative;
+}
+
+.Server_Metric_Surround_R
+{
+  float: right;
+  height: 25px;
+  border: 0px;
+  padding: 0px;
+  /*
+    I've heard on the grapevine this simple trick forces IE to download
+    the images associated with this item, rather than it's "on/off" download
+    mechanism, resulting in a screwed-up page!
+  */
+  position: relative;
+}
+
+.Server_Metric_Surround
+{
+  clear: both;
+  width: 100%;
+  height: 25px;
+  background-image: url('../images/metric_background.gif');
+  background-repeat: repeat-x;
+  /*
+    I've heard on the grapevine this simple trick forces IE to download
+    the images associated with this item, rather than it's "on/off" download
+    mechanism, resulting in a screwed-up page!
+  */
+  position: relative;
+}
+
+  .Server_Metric_Img
+  {
+    float: left;
+    width: 19px;
+    height: 22px;
+    position: relative;
+    top: 3px;
+  }
+
+  .Server_Metric_Name
+  {
+    float: left;
+    height: 22px;
+    position: relative;
+    top: 4px;
+    left: 10px;
+  }
+    
+  .Server_Metric_SchImg
+  {
+    float: right;
+    height: 22px;
+    position: relative;
+    top: 5px;
+  }
+  
+.Server_Metric_CheckResult_OK
+{
+  display: none;
+  clear: both;
+  width: 100%;
+}
+
+.Server_Metric_CheckResult_OK div
+{
+  font-family: monospace;
+  background-color: #99ff99;
+  border-style: dashed;
+  border-width: 0px 1px 1px 1px;
+  border-color: #008800;
+  padding: 4px;
+}
+
+.Server_Metric_CheckResult_W
+{
+
+  display: none;
+  clear: both;
+  width: 100%;
+}
+
+.Server_Metric_CheckResult_W div
+{
+  font-family: monospace;
+  background-color: #ffff99;
+  border-style: dashed;
+  border-width: 0px 1px 1px 1px;
+  border-color: #ff9933;
+  padding: 4px;
+}
+
+.Server_Metric_CheckResult_C
+{
+
+  display: none;
+  clear: both;
+  width: 100%;
+}
+
+.Server_Metric_CheckResult_C div
+{
+  font-family: monospace;
+  background-color: #ff9999;
+  border-style: dashed;
+  border-width: 0px 1px 1px 1px;
+  border-color: #880000;
+  padding: 4px;
+}
+
+.Server_Metric_CheckResult_UN
+{
+  display: none;
+  clear: both;
+  width: 100%;
+}
+
+.Server_Metric_CheckResult_UN div
+{
+  font-family: monospace;
+  background-color: #e5e5e5;
+  border-style: dashed;
+  border-width: 0px 1px 1px 1px;
+  border-color: #c0c0c0;
+  padding: 4px;
+}
+
+.Server_Metric_ScheduleInfo
+{
+  display: none;
+  clear: both;
+  width: 100%;
+}
+
+.Server_Metric_ScheduleInfo div
+{
+  font-family: monospace;
+  background-color: #ccffff;
+  border-style: dashed;
+  border-width: 0px 1px 1px 1px;
+  border-color: #0000ff;
+  padding: 4px;
+}

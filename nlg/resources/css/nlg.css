@@ -1,0 +1,58 @@
+.statuscolumn {float:left; width:33%; min-width:33%; margin-top:10px; height:40px; min-height:40px; font-size:120%;}
+.status_OK {background-image:url('../images/metric_OK.gif'); background-repeat:no-repeat;}
+.status_W {background-image:url('../images/metric_W.gif'); background-repeat:no-repeat;}
+.status_C {background-image:url('../images/metric_C.gif'); background-repeat:no-repeat;}
+.status_UN {background-image:url('../images/metric_UN.gif'); background-repeat:no-repeat;}
+
+#Content_ServerList_Data div.statuscolumn p.marginleft25 {margin-left:25px;}
+#Content_ServerList_Data div.statuscolumn p.fontsize80   {font-size:80%;}
+#Content_ServerList_Data div.statuscolumn p {margin:0px;}
+
+.nlg-gray {display:none;}
+
+.summarylist {
+  width:33%;
+  min-width:33%;
+  padding-top:2%;
+  padding-bottom:2%;
+  float:left;
+  border-top:1px dotted #DDDDCC;
+  border-bottom:1px dotted #DDDDCC;
+  font-weight:bold;
+  font-size:150%;
+        height:50px;
+        min-height:50px;
+}
+
+.more-link {
+  margin-bottom: 5%;
+  margin-right: 5%;
+}
+
+.up {
+  font-size: 0px;
+  line-height: 0%;
+  width: 0px;
+  border-bottom: 20px solid #66DD4C;
+  border-left: 10px solid #ffffff;
+  border-right: 10px solid #ffffff;
+}
+
+.issues {
+        font-size: 0px;
+        line-height: 0%;
+        width: 0px;
+        border-bottom: 20px solid #ffff01;
+        border-left: 10px solid #ffffff;
+        border-right: 10px solid #ffffff;
+}
+
+.down {
+        font-size: 0px;
+        line-height: 0%;
+        width: 0px;
+        border-top: 20px solid #ff0000;
+        border-left: 10px solid #ffffff;
+        border-right: 10px solid #ffffff;
+}
+

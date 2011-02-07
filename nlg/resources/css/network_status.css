@@ -1,0 +1,63 @@
+.Network_Surround_OK
+{
+  background-image: url('images/network_status_OK.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Network_Surround_W
+{
+  background-image: url('images/network_status_W.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Network_Surround_C
+{
+  background-image: url('images/network_status_C.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Network_L
+{
+  float: left;
+}
+
+.Network_R
+{
+  float: right;
+}
+
+#CommentNotify
+{
+  background-color: #ffffb3;
+  border: dashed 1px #c0c0c0;
+  padding: 4px;
+}
+
+  #CommentNotify_Img
+  {
+    position: relative;
+    float: left;
+    top: 1px;
+    left: 1px;
+  }
+  
+  #CommentNotify_Text
+  {
+    float: left;
+    position: relative;
+    left: 5px;
+    top: 2px;
+  }
+
+#CommentNotify_Detail
+{
+  position: relative;
+  display: none;
+  clear: both;
+}

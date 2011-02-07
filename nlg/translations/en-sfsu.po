@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION"
+"Last-Translator: NAME <EMAIL@ADDRESS>"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>"
+"MIME-Version: 1.0"
+"Content-Type: text/plain; charset=utf-8"
+"Content-Transfer-Encoding: 8bit"
+
+msgid "nlg_no_javascript"
+msgstr "Javascript appears to be disabled, which may cause the server details links to be non-functional. In this case, all server details are provided above."
+

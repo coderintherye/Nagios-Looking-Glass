@@ -1,0 +1,62 @@
+
+.Mini_Line_Spacer
+{
+  height: 5px;
+  /*
+    IE needs this font-size otherwise it creates a minimum height of ~22px for the font spacing
+    and this spacer doesn't work!
+  */
+  font-size: 0px;
+}
+
+.Mid_Line_Spacer
+{
+  height: 11px;
+  /*
+    IE needs this font-size otherwise it creates a minimum height of ~22px for the font spacing
+    and this spacer doesn't work!
+  */
+  font-size: 0px;
+}
+
+.Line_Spacer
+{
+  height: 22px;
+  /*
+    IE needs this font-size otherwise it creates a minimum height of ~22px for the font spacing
+    and this spacer doesn't work!
+  */
+  font-size: 0px;
+}
+
+.Section_Title
+{
+  background-color: #e5e5e5;
+  padding: 2px;
+}
+
+.Header_Title_SiteName
+{
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.Header_Title_CompanyName
+{
+  font-size: 12pt;
+  font-style: italic;
+}
+
+#ServerList_Control
+{
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
+
+#FeedInfo
+{
+  background-color: #A7D5FF;
+  padding: 3px;
+  display: none;
+}

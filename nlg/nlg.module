@@ -1,0 +1,288 @@
+<?php
+require_once './' . drupal_get_path('module', 'nlg') . "/includes/s3_client.php"; // Include Nagios Looking Glass Library file (with changes)
+require_once './' . drupal_get_path('module', 'nlg') . "/includes/nlg_overview_page.inc";
+//require_once './' . drupal_get_path('module', 'nlg') . "/includes/nlg_systemerror_page.inc";
+
+/**
+ * Implementation of hook_init().
+ * Add the nlg related css and js to every page
+ */
+
+function nlg_init() {
+  drupal_add_js(drupal_get_path('module', 'nlg') . "/resources/js/ajax.js");
+  drupal_add_js(drupal_get_path('module', 'nlg') . "/resources/js/browser_hack.js");
+  drupal_add_js(drupal_get_path('module', 'nlg') . "/resources/js/nlg_lang.js");
+  drupal_add_js(drupal_get_path('module', 'nlg') . "/resources/js/user.js");
+  drupal_add_js(drupal_get_path('module', 'nlg') . "/resources/js/nlg.js");
+  drupal_add_js(
+    '$(document).ready(function() {
+       $(".Server_MetricList").hide();
+     }
+     ); ',
+    'inline');
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/nlg.css");
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/network_status.css");
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/server_detail.css");
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/server_summary.css");
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/default.css");
+  drupal_add_css(drupal_get_path('module', 'nlg') . "/resources/css/announcements.css");
+}
+
+/**
+ * Implementation of hook_theme().
+ * DRUPAL WONT SEE THIS HOOK UNTIL YOU CLEAR YOUR CACHE
+ */
+function nlg_theme() {
+  return array(
+    'nlg_overview_form' => array(
+      'template' => 'nlg-overview-form',
+      'path' => drupal_get_path('module', 'nlg') .'/theme',
+      'arguments' => array('form' => NULL),
+    ),
+    'nlg_systemerror_form' => array(
+      'template' => 'nlg-systemerror-form',
+      'path' => drupal_get_path('module', 'nlg') .'/theme',
+      'arguments' => array('form' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_block().
+ * Add a block to display the system status
+ */
+
+function nlg_block($op='list', $delta = 0, $edit=array()) {
+  switch ($op) {
+    case 'list':
+      $blocks = array();
+      $blocks[0]['info'] = t('Nagios Looking Glass');
+      return $blocks;
+    case 'save':
+      break;
+    case 'view':
+      switch ($delta) {
+        case 0:
+          $block['subject'] = t('Nagios Looking Glass');
+          $block['content'] = theme('nlg_overview_form');
+          return $block;
+      }
+  }
+}
+
+/**
+ * Give permissions for administering and viewing the system status block
+ */
+
+function nlg_perm() {
+  return array('administer nlg', 'view nlg', 'view advanced details');
+}
+
+/**
+ * Implementation of Form API.
+ * Add a form for managing administrative settings
+ */
+
+function nlg_admin() {
+  $form = array();
+
+  $form['general'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('General'),
+    '#collapsible' => TRUE,
+    '#description' => t('General Settings')
+  );
+
+  $form['general']['nlg_serverfeed_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nagios Service Feed URL'),
+    '#default_value' => variable_get('nlg_serverfeed_url', 'http://localhost/nlg/server/s3_poller.php'), // Default value is empty
+    '#size' => 50,
+    '#maxlength' => 254,
+    '#description' => t("Nagios Service Feed URL with a configured nagios instance that will allow connections from this server"),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_clientadminemail'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Admin email address'),
+    '#default_value' => variable_get('nlg_clientadminemail', ''), // Default value is empty
+    '#size' => 50,
+    '#maxlength' => 254,
+    '#description' => t("Email you want to be displayed to contact the administrator"),
+  );
+
+  $form['general']['nlg_clientcompanylogo'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Path to logo'),
+    '#default_value' => variable_get('nlg_clientcompanylogo', ''), // Default value is empty
+    '#size' => 50,
+    '#maxlength' => 254,
+    '#description' => t("Path to logo, e.g., sites/default/files/logo.png"),
+  );
+
+  $form['general']['nlg_clientdateformat'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Client date format'),
+    '#default_value' => variable_get('nlg_clientdateformat', 'd/m/Y H:i:s'),
+    '#size' => 15,
+    '#maxlength' => 25,
+    '#description' => t("PHP style formatting string to use to pass to the date() function"),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_clientenablecaching'] = array(
+    '#type' => 'radios',
+    '#title' => t('Enable Caching'),
+    '#default_value' => variable_get('nlg_clientenablecaching', '1'),
+    '#options' => array(t('1'), t('0')),
+    '#description' => t('1 to enable caching, 0 to disable caching'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_serverfeed_authenabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable Authentication'),
+    '#default_value' => variable_get('nlg_serverfeed_authenabled', 0),
+    '#description' => t('Select if user and password authentication are enabled on the server feed'),
+  );
+
+  $form['general']['nlg_authusername'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Server feed authentication username'),
+    '#default_value' => variable_get('nlg_authusername', ''),
+    '#size' => 15,
+    '#maxlength' => 25,
+    '#description' => t("Username for server authentication feed. This is only needed when authentication is enabled."),
+  );
+
+  $form['general']['nlg_authpassword'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Server feed authentication password'),
+    '#default_value' => variable_get('nlg_authpassword', ''),
+    '#size' => 15,
+    '#maxlength' => 25,
+    '#description' => t("Password for server authentication feed. This is only needed when authentication is enabled."),
+  );
+
+  $form['general']['nlg_clientcachettl'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Cache data TTL'),
+    '#default_value' => variable_get('nlg_clientcachettl', '60'),
+    '#size' => 2,
+    '#maxlength' => 8,
+    '#description' => t("How long should cached data be saved for (in seconds)"),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_refreshrate'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Refresh rate'),
+    '#default_value' => variable_get('nlg_refreshrate', '60'),
+    '#size' => 3,
+    '#maxlength' => 6,
+    '#description' => t("How often should the page be refreshed (in seconds)"),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_ok_short'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Short name for full working status'),
+    '#default_value' => variable_get('nlg_nagios_service_status_ok_short', 'OK'),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t('What should the 1 or 2 character short text be when the system status is running perfect (e.g., OK)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_warn_short'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Short name for warning status'),
+    '#default_value' => variable_get('nlg_nagios_service_status_warn_short', 'W'),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t('What should the 1 or 2 character short text be when the system status is running below the warning threshold (e.g., W)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_critical_short'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Short name for critical status'),
+    '#default_value' => variable_get('nlg_nagios_service_status_critical_short', 'C'),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t('What should the 1 or 2 character text be when the system status is running below the critical threshold (e.g., C)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_unknown_short'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Short name for unknown status'),
+    '#default_value' => variable_get('nlg_nagios_service_unknown_short', 'U'),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t('What should the 1 or 2 character text be when the system status is not known (e.g., U)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_ok'] = array(
+    '#type' => 'textfield',
+    '#title' => t('System Status OK text'),
+    '#default_value' => variable_get('nlg_nagios_service_status_ok', 'OK'),
+    '#size' => 30,
+    '#maxlength' => 50,
+    '#description' => t('What should the text be when the system status is running perfect (e.g., OK)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_warning'] = array(
+    '#type' => 'textfield',
+    '#title' => t('System Status Warning text'),
+    '#default_value' => variable_get('nlg_nagios_service_status_warning', 'Warning'),
+    '#size' => 30,
+    '#maxlength' => 50,
+    '#description' => t('What should the text be when the system status is below normal (e.g., Warning)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_critical'] = array(
+    '#type' => 'textfield',
+    '#title' => t('System Status Critical text'),
+    '#default_value' => variable_get('nlg_nagios_service_status_critical', 'Critical'),
+    '#size' => 30,
+    '#maxlength' => 50,
+    '#description' => t('What should the text be when the system is experiencing a failure (e.g., Critical)'),
+    '#required' => TRUE,
+  );
+
+  $form['general']['nlg_nagios_service_status_unknown'] = array(
+    '#type' => 'textfield',
+    '#title' => t('System Status Unknown text'),
+    '#default_value' => variable_get('nlg_nagios_service_status_unknown', 'Unknown'),
+    '#size' => 30,
+    '#maxlength' => 50,
+    '#description' => t('What should the text be when the system status is unknown (e.g. Unknown)'),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Implementation of hook_menu().
+ * Provide a menu for the nlg module
+ */
+
+function nlg_menu() {
+  $items['admin/settings/portlets/nlg'] = array(
+      'title' => 'Nagios Looking Glass configuration settings',
+      'description' => 'Configure settings for the nlg portlet',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('nlg_admin'),
+      'access arguments' => array('access administration pages'),
+      'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+

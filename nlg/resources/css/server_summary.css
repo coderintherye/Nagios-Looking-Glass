@@ -1,0 +1,105 @@
+#Link_Network_Status
+{
+  background-image: url('images/world_status.gif');
+  background-repeat: no-repeat;
+  height: 26px;
+  position: relative;
+  left: 5px;
+  width: 100px;
+}
+
+  #Link_Network_Status a
+  {
+    position: relative;
+    left: 30px;
+    top: 4px;
+  }
+  
+.Summary_Surround_U
+{
+  background-image: url('images/server_background_U.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Summary_Surround_D
+{
+  background-image: url('images/server_background_D.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Summary_Surround_NE
+{
+  background-image: url('images/server_background_NE.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Summary_Surround_DM
+{
+  background-image: url('images/server_background_DM.gif');
+  background-repeat: repeat-x;
+  height: 25px;
+  clear: both;
+}
+
+.Summary_L
+{
+  float: left;
+  height: 25px;
+}
+
+.Summary_Name
+{
+  float: left;
+  position: relative;
+  top: 5px;
+  font-weight: bold;
+}
+
+  .Summary_Name a
+  {
+    color: #ffffff;
+  }
+  
+  .Summary_Name a:hover
+  {
+    color: #0000ff;
+  }
+  
+  .Summary_Name a:visited
+  {
+    color: #ffffff;
+  }
+
+.Summary_MetricOK
+{
+  float: right;
+  font-weight: bold;
+  width: 20px;
+  color: #008800;
+  text-align: right;
+  position: relative;
+  top: 5px;
+}
+
+.Summary_MetricBad
+{
+  float: right;
+  font-weight: bold;
+  width: 20px;
+  color: #880000;
+  text-align: right;
+  position: relative;
+  top: 5px;
+}
+
+.Summary_R
+{
+  float: right;
+  height: 25px;
+}

@@ -1,0 +1,30 @@
+Nagios Looking Glass (NLG) is a utility for viewing filtered Nagios data.
+
+NLG is not a tool for sending Drupal data to a Nagios server. For this you should use the Nagios Monitoring module.
+
+Nagios Looking Glass (NLG) is a web-based interface for Nagios that allows you to show at-a-glance, real-time server status to 3rd parties without giving them direct access to Nagios.
+NLG is aimed at businesses wanting to publish their server status's in real-time to customers, without the complication or security risk of giving users access to the Nagios CGIs.
+NLG gives at-a-glance "traffic light" status of all servers, then a user can drill down onto the services. Starting with v1.1.0, NLG supports giving different users access to different servers via the built-in filtering.
+
+You will need three things in place to use the NLG module
+
+A working Nagios installation. If you are using Ubuntu, I suggest using "sudo apt-get install nagios3". For other platforms, check out: The Nagios website
+
+Ensure Nagios works first by installing it and visiting its console. Make sure to provide viewing permissions to all hosts/services you want to show, or turn off authentication and set to only viewable by localhost if you are doing it on the same server.
+
+A working Nagios Looking Glass installation. Nagios Looking glass can be obtained from Nagios Exchange You will need to put the nlg directory somewhere that is web accessible, and that can access the Nagios server (everything can be on the same server). You can test your NLG install by going to the client folder, e.g., http://localhost/nlg/client
+
+If you are on Linux be sure to make the index folder, javascript, and sync-files all be writeable by the web user
+
+The NLG module. Install like normal by downloading and enabling this module. Make sure to set your configuration settings at Site Configuration -> NLG
+
+The NLG Drupal module is a major rewrite of the original Nagios Looking Glass plugin released with permission from the original NLG author, Andy Shellam. It provides the Nagios Looking Glass view as a block. It removes the original templating system in order to simplify the NLG interface and maintenance.
+
+There are still many issues that will need to be resolved until a non-development release can happen. Some of these include
+
+Ensure licensing is in compliance. The original license is a Creative Commons 2.5 license copyrighted and released by Andy Shellam. The full notice is available from the NLG download at NagiosExchange linked above. Andy has provided, in writing, his agreement to have the application be released on drupal.org. However, it would be best if someone knowledgeable in legal affairs and Drupal module licensing (GPL) could give comment on the current blurb and whether it should be left as is, modified, or removed.
+Continue adding back in features. The current module is a very scaled down version of NLG.
+Continue removing all unneeded templating code (The Drupal NLG module uses Drupal's theming system
+Verify on a Windows install. Currently this module has only been tested on RHEL5 and Ubuntu 9.10 Linux
+Squash bugs. There will be many, so wear boots
+Please file an issue in the queue if you experience issues.
