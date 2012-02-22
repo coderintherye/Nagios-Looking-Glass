@@ -1,5 +1,5 @@
 ; $Id$
-name = System status
+name = Nagios Looking Glass
 description = Provide web interface to Nagios data via Nagios Looking Glass
-package = sfsu -> portlet -> nlg
+package = Other
 core = 6.x
